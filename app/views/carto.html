@@ -1,0 +1,24 @@
+<div class="cartoWrapper">
+
+    <div class="mapWrapper"></div>
+
+    <div class="tools">
+        Base
+        <div ui-sortable="sortableOptions" ng-model="baseLayers">
+            <div ng-repeat="layer in baseLayers | orderBy:'ngModel.zindex':true" class="layerWrapper">
+                <label><input type="checkbox" ng-model="layer.ngModel.visible">{{layer.ngModel.title}}</label><br>
+            </div>
+        </div>
+
+        Layers
+        <div ui-sortable="sortableOptions" ng-model="layers">
+            <div ng-repeat="layer in layers | orderBy:'ngModel.zindex':true" class="layerWrapper">
+                <label><input type="checkbox" ng-model="layer.ngModel.visible">{{layer.ngModel.title}}</label><br>
+                <input type="range" min="0" max="1" step="0.1" ng-model="layer.ngModel.opacity">
+            </div>
+        </div>
+    </div>
+
+    <div class="modules" ng-transclude></div>
+
+</div>

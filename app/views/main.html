@@ -1,0 +1,29 @@
+<div sglk-carto ng-model="map">
+
+    <div ng-repeat="layer in baseLayers" sglk-layer is-base-layer ng-model="layer"></div>
+
+    <div ng-repeat="layer in layers" sglk-layer ng-model="layer"></div>
+
+    <div sglk-aside>
+        <div sglk-aside-item picto="moon-info">
+            <div ng-controller="module1Ctrl">
+                <form>
+                    <input type="text" ng-model="layer.title"/><br>
+                    <input type="text" ng-model="layer.url"/>
+                </form>
+                <button ng-click="addLayer(layers)">add layer</button>
+
+                <ul>
+                    <li ng-repeat="customLayer in customLayers">{{customLayer.title}} <button ng-click="removeLayer(layers, $index)">remove</button></li>
+                </ul>
+            </div>
+        </div>
+
+        <div sglk-aside-item picto="moon-info">
+            <div>Module 2</div>
+        </div>
+    </div>
+
+</div>
+
+<pre>{{layers | json}}</pre>
