@@ -7,9 +7,8 @@ app.directive('sglkCarto',function ($q) {
         transclude  : true,
         replace     : true,
         scope       : {
-            map    : "=ngModel",
-            getMap : "=",
-            ready  : "="
+            map   : "=ngModel",
+            ready : "="
         },
         controller  : function ($scope) {
             // init
@@ -33,7 +32,6 @@ app.directive('sglkCarto',function ($q) {
 
                 olMap.addLayer(layer.object);
 
-
                 // set default value if undefined
                 var params = layer.ngModel.params;
                 params.opacity = angular.isUndefined(params.opacity) ? 1 : params.opacity;
@@ -44,18 +42,16 @@ app.directive('sglkCarto',function ($q) {
                     layer.ngModel.zindex = olMap.getLayerIndex(layer.object);
                 }
 
-
                 self.updateLayer(layer);
             };
 
             this.removeLayer = function (layer, isBaseLayer) {
 
-                var remove = function(ar, obj) {
+                var remove = function (ar, obj) {
                     var index = ar.indexOf(obj);
                     ar.splice(index, 1);
                     return ar;
                 };
-
 
                 if(isBaseLayer) {
                     $scope.baseLayers = remove($scope.baseLayers, layer);
@@ -75,7 +71,7 @@ app.directive('sglkCarto',function ($q) {
                 olMap.setLayerIndex(layer.object, data.zindex);
 
                 if(data.options.isBaseLayer) {
-                    olMap.setCenter(new OpenLayers.LonLat(-100, 40), 3);
+                    olMap.setCenter(new OpenLayers.LonLat(-50, 40), 3);
                 }
 
             };
@@ -116,6 +112,8 @@ app.directive('sglkCarto',function ($q) {
                 }
             };
 
+            // has modules css mod
+            scope.hasModules = !!element.find('[sglk-aside-item]').length;
         }
     };
 
@@ -148,7 +146,6 @@ app.directive('sglkCarto',function ($q) {
                      break;*/
                     default:
                         scope.object = new OpenLayers.Layer.WMS(params.title, params.url, params.params, params.options);
-
                 }
 
                 sglkCartoCtrl.addLayer(scope, angular.isDefined(attrs.isBaseLayer));

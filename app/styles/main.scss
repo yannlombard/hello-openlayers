@@ -12,10 +12,12 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
   position: relative;
   z-index: 1;
 
-  border-left: 34px solid white;
-
   width: auto;
   height:400px;
+
+  .hasModules & {
+    border-left: 34px solid white;
+  }
 }
 .cartoWrapper .loader {
   position: absolute;top:0;left:0;right:0;bottom:0;
@@ -49,6 +51,13 @@ $blue: blue;
   top:0;left:0;bottom:0;
   z-index: 3;
   background: #EEE;
+
+  .cartoWrapper {
+    display: none;
+  }
+  .hasModules & {
+    display: block;
+  }
 
 
   .level1 {

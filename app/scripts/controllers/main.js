@@ -8,9 +8,9 @@ app.controller('MainCtrl', function ($scope) {
             url     : 'http://vmap0.tiles.osgeo.org/wms/vmap0',
             title   : 'WMS Ground',
             params  : {
-                layers  : 'ground_01',
-                visible : true,
-                opacity : 1
+                LAYERS  : 'ground_01',
+                VISIBLE : true,
+                OPACITY : 1
             },
             options : {
                 isBaseLayer : true
@@ -24,9 +24,9 @@ app.controller('MainCtrl', function ($scope) {
             url     : 'http://vmap0.tiles.osgeo.org/wms/vmap0',
             title   : 'WMS Coastline',
             params  : {
-                layers  : 'coastline_01',
-                visible : true,
-                opacity : 0.5
+                LAYERS  : 'coastline_01',
+                VISIBLE : true,
+                OPACITY : 0.5
             },
             options : {
                 isBaseLayer : false
@@ -43,14 +43,6 @@ app.controller('MainCtrl', function ($scope) {
 
      });*/
 
-    $scope.getMap1 = function (map) {
-        //console.log('GET MAP 1', map);
-    };
-
-    $scope.getMap2 = function (map) {
-        //console.log('GET MAP 2', map);
-    };
-
     $scope.$watch('map', function (map) {
 
         //console.log('MAP from mainCtrl', $scope.map);
@@ -65,10 +57,10 @@ app.controller('module1Ctrl', function ($scope, $timeout) {
         url     : 'http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi',
         title   : 'Nexrad',
         params  : {
-            layers      : 'nexrad-n0r',
-            transparent : true,
-            opacity     : 0.5,
-            format      : 'image/png'
+            LAYERS      : 'nexrad-n0r',
+            TRANSPARENT : true,
+            OPACITY     : 0.5,
+            FORMAT      : 'image/png'
         },
         options : {
             isBaseLayer : false
