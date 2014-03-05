@@ -1,3 +1,3 @@
 hello-openlayers
 ================
-Another OpenLayers Angular directive
+Another OpenLayers directive for Angular
