@@ -1,0 +1,13 @@
+<div ng-controller="module1Ctrl">
+    <pre>opacity {{map.layers[1].opacity | json}}</pre>
+
+    <form>
+        <input type="text" ng-model="layer.title"/><br>
+        <input type="text" ng-model="layer.url"/>
+    </form>
+    <button ng-click="addLayer(layers)">add layer</button>
+
+    <ul>
+        <li ng-repeat="customLayer in customLayers">{{customLayer.title}} <button ng-click="removeLayer(layers, $index)">remove</button></li>
+    </ul>
+</div>

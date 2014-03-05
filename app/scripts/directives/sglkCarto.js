@@ -8,11 +8,14 @@ app.directive('sglkCarto',function ($q) {
         replace     : true,
         scope       : {
             map    : "=ngModel",
-            getMap : "="
+            getMap : "=",
+            ready  : "="
         },
         controller  : function ($scope) {
-            var olMap;
+            // init
+            $scope.showMap = !!$scope.showMap;
 
+            var olMap;
             var self = this;
 
             olMap = new OpenLayers.Map();
@@ -30,20 +33,34 @@ app.directive('sglkCarto',function ($q) {
 
                 olMap.addLayer(layer.object);
 
+
+                // set default value if undefined
+                var params = layer.ngModel.params;
+                params.opacity = angular.isUndefined(params.opacity) ? 1 : params.opacity;
+                params.visible = angular.isUndefined(params.visible) ? true : params.visible;
+
                 // set zindex
                 if(angular.isUndefined(layer.ngModel.zindex)) {
                     layer.ngModel.zindex = olMap.getLayerIndex(layer.object);
                 }
+
 
                 self.updateLayer(layer);
             };
 
             this.removeLayer = function (layer, isBaseLayer) {
 
+                var remove = function(ar, obj) {
+                    var index = ar.indexOf(obj);
+                    ar.splice(index, 1);
+                    return ar;
+                };
+
+
                 if(isBaseLayer) {
-                    $scope.baseLayers.pop(layer);
+                    $scope.baseLayers = remove($scope.baseLayers, layer);
                 } else {
-                    $scope.layers.pop(layer);
+                    $scope.layers = remove($scope.layers, layer);
                 }
 
                 olMap.removeLayer(layer.object);
@@ -51,29 +68,37 @@ app.directive('sglkCarto',function ($q) {
 
             this.updateLayer = function (layer) {
 
-                var params = layer.ngModel;
+                var data = layer.ngModel;
 
-                layer.object.setOpacity(params.opacity);
-                layer.object.setVisibility(params.visible);
-                olMap.setLayerIndex(layer.object, params.zindex);
+                layer.object.setOpacity(data.params.opacity);
+                layer.object.setVisibility(data.params.visible);
+                olMap.setLayerIndex(layer.object, data.zindex);
 
-                if(params.isBaseLayer) {
+                if(data.options.isBaseLayer) {
                     olMap.setCenter(new OpenLayers.LonLat(-100, 40), 3);
                 }
 
             };
 
-            $scope.olMap = olMap;
+            $scope.map = olMap;
 
         },
         link        : function (scope, element, attrs) {
-            var olMap = scope.olMap;
 
-            olMap.render(element.find('.mapWrapper')[0]);
-            console.log(olMap);
+            scope.render = function () {
+                scope.showMap = true;
+                scope.map.render(element.find('.mapWrapper')[0]);
+            };
 
-            //scope.getMap(olMap);
-            scope.map = olMap;
+            if(angular.isUndefined(attrs.ready)) {
+                scope.render();
+
+            } else {
+
+                scope.ready = function () {
+                    scope.render();
+                };
+            }
 
             // sortable Options
             scope.sortableOptions = {
@@ -106,14 +131,6 @@ app.directive('sglkCarto',function ($q) {
 
                 var params = scope.ngModel;
 
-                if(angular.isUndefined(params.opacity)) {
-                    params.opacity = 1;
-                }
-
-                if(angular.isUndefined(params.visible)) {
-                    params.visible = true;
-                }
-
                 switch (params.type) {
                     /*case 'google':
 
@@ -130,13 +147,7 @@ app.directive('sglkCarto',function ($q) {
 
                      break;*/
                     default:
-                        scope.object = new OpenLayers.Layer.WMS(params.title, params.url, {
-                            layers      : params.layers,
-                            transparent : params.transparent,
-                            format      : params.format
-                        }, {
-                            isBaseLayer : params.isBaseLayer
-                        });
+                        scope.object = new OpenLayers.Layer.WMS(params.title, params.url, params.params, params.options);
 
                 }
 

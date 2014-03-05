@@ -1,38 +1,16 @@
-<div sglk-carto ng-model="map" get-map="getMap1">
+<div sglk-carto ng-model="map" get-map="getMap1" ready="map1isReady">
+<!--<div sglk-carto ng-model="map" get-map="getMap1">-->
 
     <div sglk-layer ng-repeat="layer in baseLayers" is-base-layer ng-model="layer"></div>
     <div sglk-layer ng-repeat="layer in layers" ng-model="layer"></div>
 
     <div sglk-aside ng-model="panes">
         <div sglk-aside-item picto="moon-info" id="tab1">
-
-            <div ng-controller="module1Ctrl">
-
-                <pre>opacity {{map.layers[1].opacity | json}}</pre>
-
-                <form>
-                    <input type="text" ng-model="layer.title"/><br>
-                    <input type="text" ng-model="layer.url"/>
-                </form>
-                <button ng-click="addLayer(layers)">add layer</button>
-
-                <ul>
-                    <li ng-repeat="customLayer in customLayers">{{customLayer.title}} <button ng-click="removeLayer(layers, $index)">remove</button></li>
-                </ul>
-            </div>
-
+            <div ng-include="'views/module1.html'"></div>
         </div>
 
         <div sglk-aside-item picto="moon-info" id="tab2">
-            <div ng-controller="easementCtrl">
-
-                <br/>
-                <button ng-click="test()">Draw easement</button>
-
-                <br/>
-                Géométrie : {{geometryString}}
-
-            </div>
+            <div ng-include="'views/module2.html'"></div>
         </div>
     </div>
 

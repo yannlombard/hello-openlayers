@@ -7,6 +7,7 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
   position: relative;
 }
 
+.cartoWrapper .loader,
 .mapWrapper {
   position: relative;
   z-index: 1;
@@ -15,6 +16,14 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 
   width: auto;
   height:400px;
+}
+.cartoWrapper .loader {
+  position: absolute;top:0;left:0;right:0;bottom:0;
+  z-index: 3;
+  text-align: center;
+  line-height: 370px;
+  font-size: 36px;
+  background: #EEE;
 }
 
 .tools {
@@ -38,7 +47,7 @@ $blue: blue;
 .aside {
   position: absolute;
   top:0;left:0;bottom:0;
-  z-index: 2;
+  z-index: 3;
   background: #EEE;
 
 
