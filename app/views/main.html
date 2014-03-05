@@ -1,12 +1,15 @@
-<div sglk-carto ng-model="map">
+<div sglk-carto ng-model="map" get-map="getMap1">
 
-    <div ng-repeat="layer in baseLayers" sglk-layer is-base-layer ng-model="layer"></div>
+    <div sglk-layer ng-repeat="layer in baseLayers" is-base-layer ng-model="layer"></div>
+    <div sglk-layer ng-repeat="layer in layers" ng-model="layer"></div>
 
-    <div ng-repeat="layer in layers" sglk-layer ng-model="layer"></div>
+    <div sglk-aside ng-model="panes">
+        <div sglk-aside-item picto="moon-info" id="tab1">
 
-    <div sglk-aside>
-        <div sglk-aside-item picto="moon-info">
             <div ng-controller="module1Ctrl">
+
+                <pre>opacity {{map.layers[1].opacity | json}}</pre>
+
                 <form>
                     <input type="text" ng-model="layer.title"/><br>
                     <input type="text" ng-model="layer.url"/>
@@ -17,6 +20,48 @@
                     <li ng-repeat="customLayer in customLayers">{{customLayer.title}} <button ng-click="removeLayer(layers, $index)">remove</button></li>
                 </ul>
             </div>
+
+        </div>
+
+        <div sglk-aside-item picto="moon-info" id="tab2">
+            <div ng-controller="easementCtrl">
+
+                <br/>
+                <button ng-click="test()">Draw easement</button>
+
+                <br/>
+                Géométrie : {{geometryString}}
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--
+<div sglk-carto ng-model="map2" get-map="getMap2">
+
+    <div ng-repeat="layer in baseLayers2" sglk-layer is-base-layer ng-model="layer"></div>
+    <div ng-repeat="layer in layers2" sglk-layer ng-model="layer"></div>
+
+    <div sglk-aside>
+        <div sglk-aside-item picto="moon-info">
+
+            <div ng-controller="module1Ctrl">
+
+                <pre>opacity {{map2.layers[1].opacity | json}}</pre>
+
+                <form>
+                    <input type="text" ng-model="layer.title"/><br>
+                    <input type="text" ng-model="layer.url"/>
+                </form>
+                <button ng-click="addLayer(layers2)">add layer</button>
+
+                <ul>
+                    <li ng-repeat="customLayer in customLayers">{{customLayer.title}} <button ng-click="removeLayer(layers2, $index)">remove</button></li>
+                </ul>
+            </div>
+
         </div>
 
         <div sglk-aside-item picto="moon-info">
@@ -24,6 +69,4 @@
         </div>
     </div>
 
-</div>
-
-<pre>{{layers | json}}</pre>
+</div>-->

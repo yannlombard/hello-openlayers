@@ -9,9 +9,17 @@ app.directive('sglkAside',function () {
         transclude  : true,
         restrict    : 'A',
         replace     : true,
+        scope       : {
+            ngModel : '='
+        },
         controller  : function ($scope) {
 
             $scope.panes = [];
+
+            $scope.ngModel = {
+                all    : $scope.panes,
+                active : ''
+            };
 
             // this.functionName expose function to be accessible in tab directive
             // (requirer with require: '^sglkTabs' & injected into link with sglkTabsCtrl)
@@ -28,6 +36,7 @@ app.directive('sglkAside',function () {
                 if(pane.active) {
 
                     pane.active = false;
+                    $scope.ngModel.active = '';
 
                 } else {
                     // if isn't active then hide all and show pane
@@ -37,6 +46,7 @@ app.directive('sglkAside',function () {
                     });
 
                     pane.active = true;
+                    $scope.ngModel.active = pane.id;
                 }
 
             };
@@ -53,13 +63,8 @@ app.directive('sglkAside',function () {
             restrict    : 'A',
             replace     : true,
             scope       : {
-                picto : '@'
-            },
-            controller  : function ($scope) {
-
-                // unable to inject sglkTabsCtrl in controller like line below
-                //controller: function($scope, sglkAsideCtrl) {
-
+                picto : '@',
+                id    : '@'
             },
             link        : function postLink(scope, element, attrs, sglkAsideCtrl) {
                 // sglkAsideCtrl is arbitrary. only order matters

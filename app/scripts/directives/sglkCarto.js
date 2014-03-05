@@ -1,17 +1,18 @@
 'use strict';
 
 app.directive('sglkCarto',function ($q) {
-    var olMap;
-
     return {
         restrict    : 'A',
         templateUrl : 'views/carto.html',
         transclude  : true,
         replace     : true,
         scope       : {
-            map    : "=ngModel"
+            map    : "=ngModel",
+            getMap : "="
         },
         controller  : function ($scope) {
+            var olMap;
+
             var self = this;
 
             olMap = new OpenLayers.Map();
@@ -37,7 +38,7 @@ app.directive('sglkCarto',function ($q) {
                 self.updateLayer(layer);
             };
 
-            this.removeLayer = function(layer, isBaseLayer) {
+            this.removeLayer = function (layer, isBaseLayer) {
 
                 if(isBaseLayer) {
                     $scope.baseLayers.pop(layer);
@@ -62,13 +63,17 @@ app.directive('sglkCarto',function ($q) {
 
             };
 
+            $scope.olMap = olMap;
+
         },
         link        : function (scope, element, attrs) {
+            var olMap = scope.olMap;
 
-            if(!scope.rendered) {
-                olMap.render(element.find('.mapWrapper')[0]);
-                scope.rendered = true;
-            }
+            olMap.render(element.find('.mapWrapper')[0]);
+            console.log(olMap);
+
+            //scope.getMap(olMap);
+            scope.map = olMap;
 
             // sortable Options
             scope.sortableOptions = {
@@ -112,18 +117,18 @@ app.directive('sglkCarto',function ($q) {
                 switch (params.type) {
                     /*case 'google':
 
-                        scope.object = new OpenLayers.Layer.Google(params.title, {
-                            numZoomLevels : params.numZoomLevels
-                        });
+                     scope.object = new OpenLayers.Layer.Google(params.title, {
+                     numZoomLevels : params.numZoomLevels
+                     });
 
-                        break;
-                    case 'osm':
+                     break;
+                     case 'osm':
 
-                        scope.object = new OpenLayers.Layer.OSM(params.title, params.arrayOSM, {
-                            isBaseLayer : params.isBaseLayer
-                        });
+                     scope.object = new OpenLayers.Layer.OSM(params.title, params.arrayOSM, {
+                     isBaseLayer : params.isBaseLayer
+                     });
 
-                        break;*/
+                     break;*/
                     default:
                         scope.object = new OpenLayers.Layer.WMS(params.title, params.url, {
                             layers      : params.layers,
@@ -141,7 +146,7 @@ app.directive('sglkCarto',function ($q) {
                     sglkCartoCtrl.updateLayer(scope);
                 }, true);
 
-                scope.$on("$destroy", function() {
+                scope.$on("$destroy", function () {
                     sglkCartoCtrl.removeLayer(scope, angular.isDefined(attrs.isBaseLayer));
                 });
             }

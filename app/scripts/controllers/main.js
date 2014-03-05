@@ -24,6 +24,28 @@ app.controller('MainCtrl', function ($scope) {
         }
     ];
 
+    $scope.baseLayers2 = angular.copy($scope.baseLayers);
+    $scope.layers2 = angular.copy($scope.layers);
+
+    /*$scope.map.then(function(map) {
+
+        console.log('MAP from mainCtrl', map);
+
+    });*/
+
+    $scope.getMap1 = function(map) {
+        //console.log('GET MAP 1', map);
+    };
+
+    $scope.getMap2 = function(map) {
+        //console.log('GET MAP 2', map);
+    };
+
+    $scope.$watch('map', function(map) {
+
+        //console.log('MAP from mainCtrl', $scope.map);
+    });
+
     /*$scope.test = {
         type        : 'wms',
         url         : 'http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi',
@@ -65,4 +87,9 @@ app.controller('module1Ctrl', function($scope) {
         layers.pop(remLayer);
         $scope.customLayers.pop(remLayer);
     };
+
+    //console.log('MAP from moduleCtrl', $scope.map);
+    $scope.$watch('map', function() {
+        //console.log('MAP from moduleCtrl', $scope.map);
+    });
 });
