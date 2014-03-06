@@ -1,0 +1,21 @@
+<div sglk-carto="" ng-model="map" ready="map1isReady">
+<!--<div sglk-carto ng-model="map">-->
+
+    <div sglk-layer="" ng-repeat="layer in baseLayers" is-base-layer="" ng-model="layer"></div>
+    <div sglk-layer="" ng-repeat="layer in layers" ng-model="layer"></div>
+
+    <div sglk-aside="" ng-model="panes">
+        <div sglk-aside-item="" picto="moon-info" id="tab1">
+
+            <div ng-include="'views/module1.html'"></div>
+
+        </div>
+
+        <div sglk-aside-item="" picto="moon-info" id="tab2">
+
+            <div ng-include="'views/module2.html'"></div>
+
+        </div>
+    </div>
+
+</div>
